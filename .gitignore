@@ -12,6 +12,9 @@ node_modules
 .vscode
 .zed
 
+# Claude
+.claude
+
 mise.toml
 
 .tanstack

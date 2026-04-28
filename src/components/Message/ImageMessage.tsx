@@ -59,6 +59,7 @@ export default function ImageMessage(message: MessageRow) {
     if (
       load.type === "download" &&
       load.status === "pending" &&
+      content.kind !== "video" &&
       dayjs(message.timestamp).isAfter(dayjs().subtract(1, "day"))
     ) {
       startLoad();
