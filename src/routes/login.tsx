@@ -2,7 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/supabase/client";
 import { useTranslation } from "@/hooks/useTranslation";
-import { GoogleOutlined } from "@ant-design/icons";
+import { GoogleOutlined, GithubOutlined } from "@ant-design/icons";
+
+type OAuthProvider = "google" | "github";
 
 export const Route = createFileRoute("/login")({
   component: Login,
@@ -16,9 +18,9 @@ function Login() {
 
   const { translate: t } = useTranslation();
 
-  async function handleLogInWithOauth() {
+  async function handleLogInWithOauth(provider: OAuthProvider) {
     await supabase.auth.signInWithOAuth({
-      provider: "google",
+      provider,
       options: {
         redirectTo: window.location.origin + (redirect || "/"),
       },
@@ -51,9 +53,17 @@ function Login() {
         <button
           type="button"
           className="primary bg-blue-500 hover:bg-blue-400 text-white w-full border-none"
-          onClick={handleLogInWithOauth}
+          onClick={() => handleLogInWithOauth("google")}
         >
           <GoogleOutlined /> {t("Continuar con Google")}
+        </button>
+
+        <button
+          type="button"
+          className="primary bg-gray-900 hover:bg-gray-800 text-white w-full border-none"
+          onClick={() => handleLogInWithOauth("github")}
+        >
+          <GithubOutlined /> {t("Continuar con GitHub")}
         </button>
 
         <div className={`border-b border-border w-full ${import.meta.env.DEV ? "" : "hidden"}`} />
