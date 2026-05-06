@@ -24,7 +24,7 @@ function Conversations() {
   const roles: Record<string, string> = {
     "owner": t("Propietario"),
     "admin": t("Administrador"),
-    "user": t("Usuario"),
+    "member": t("Miembro"),
   };
 
   const handleInvitationAction = (agentId: string, status: "accepted" | "rejected") => {
