@@ -16,6 +16,13 @@ export type SignupPayload = {
   waba_id?: string;
   business_id?: string;
   flow_type?: "only_waba" | "new_phone_number" | "existing_phone_number";
+  callback_url?: string;
+  verify_token?: string;
+};
+
+export type SignupOptions = {
+  callback_url?: string;
+  verify_token?: string;
 };
 
 // Successful flow data
@@ -61,6 +68,7 @@ type WhatsAppIntegrationContextType = {
   launchWhatsAppSignup: (
     onSuccess: (phone_number_id: string) => void,
     setLoading: (loading: boolean) => void,
+    options?: SignupOptions,
   ) => void;
 };
 
@@ -175,6 +183,7 @@ export function WhatsAppIntegrationProvider({
     (
       onSuccess: (phone_number_id: string) => void,
       setLoading: (loading: boolean) => void,
+      options?: SignupOptions,
     ) => {
       // Launch Facebook login
       (window as any).FB.login(
@@ -201,6 +210,8 @@ export function WhatsAppIntegrationProvider({
               waba_id: sessionInfo.waba_id,
               business_id: sessionInfo.business_id,
               flow_type: sessionInfo.flow_type,
+              callback_url: options?.callback_url || undefined,
+              verify_token: options?.verify_token || undefined,
             };
 
             console.log("Sending signup payload:", payload); // Remove after testing

@@ -39,6 +39,22 @@ export type TemplateDraft = {
 
 export type Language = "es" | "en" | "pt";
 
+const SUPPORTED_LANGUAGES: Language[] = ["es", "en", "pt"];
+
+export function detectDefaultLanguage(): Language {
+  const candidates =
+    typeof navigator !== "undefined"
+      ? [...(navigator.languages ?? []), navigator.language].filter(Boolean)
+      : [];
+
+  for (const tag of candidates) {
+    const base = tag.toLowerCase().split("-")[0] as Language;
+    if (SUPPORTED_LANGUAGES.includes(base)) return base;
+  }
+
+  return "en";
+}
+
 export type UIState = {
   templatePicker: boolean;
   templateDrafts: Map<string, TemplateDraft>;
@@ -85,7 +101,7 @@ export const createUISlice: StateCreator<Partial<AppState>> = (
   filter: "todas" as keyof typeof filters,
   searchPattern: "",
   isLoading: false,
-  language: "es" as Language,
+  language: detectDefaultLanguage(),
   toggle: (component: keyof UIState, value?: boolean) =>
     set((state) => ({
       ui: {

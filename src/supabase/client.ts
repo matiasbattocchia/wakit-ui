@@ -509,10 +509,13 @@ export type OrganizationExtra = {
 
 export type OrganizationAddressExtra = {
   waba_id?: string;
+  business_id?: string;
   phone_number?: string;
   verified_name?: string;
   access_token?: string;
   flow_type?: "only_waba" | "new_phone_number" | "existing_phone_number";
+  callback_url?: string | null;
+  verify_token?: string | null;
 };
 
 export type ConversationExtra = {

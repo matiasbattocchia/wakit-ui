@@ -6,7 +6,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { TickProvider } from "./contexts/useTick";
 import { WhatsAppIntegrationProvider } from "./contexts/WhatsAppIntegrationContext";
 import { loadTranslations } from "./i18n/translations";
-import type { Language } from "./stores/uiSlice";
+import { detectDefaultLanguage, type Language } from "./stores/uiSlice";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -47,10 +47,7 @@ function detectLanguage(): Language {
     if (stored?.state?.ui?.language) return stored.state.ui.language;
   } catch { /* ignore */ }
 
-  const nav = navigator.language;
-  if (nav.startsWith("en")) return "en";
-  if (nav.startsWith("pt")) return "pt";
-  return "es";
+  return detectDefaultLanguage();
 }
 
 const initialLang = detectLanguage();

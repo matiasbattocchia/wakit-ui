@@ -136,6 +136,44 @@ function WhatsAppDetails() {
             />
           </label>
 
+          {extra?.access_token && (
+            <label>
+              <div className="label">{t("Token de acceso de WABA")}</div>
+              <input
+                type="text"
+                className="text font-mono text-xs"
+                value={extra.access_token}
+                readOnly
+              />
+            </label>
+          )}
+
+          <div className="instructions">
+            <p>{t("Sobrescribir la URL de callback es útil para evadir OpenBSP y recibir los webhooks crudos en el endpoint que indiques. OpenBSP seguirá recibiendo los eventos de cuenta y plantillas (no se pueden redirigir), pero no recibirá los mensajes.")}</p>
+          </div>
+
+          <label>
+            <div className="label">{t("URL de callback")}</div>
+            <input
+              type="text"
+              className="text"
+              value={extra?.callback_url || ""}
+              placeholder={t("Sin sobrescribir")}
+              readOnly
+            />
+          </label>
+
+          <label>
+            <div className="label">{t("Verify token")}</div>
+            <input
+              type="text"
+              className="text"
+              value={extra?.verify_token || ""}
+              placeholder={t("Sin sobrescribir")}
+              readOnly
+            />
+          </label>
+
           {/* Disconnect button */}
           {integration.status === "connected" && !showInstructions && <Button
             type="button"
